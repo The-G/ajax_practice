@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AjaxPractice</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+
+</head>
+<body>
+  <div class="container">
+    <h1>
+      <% if user_signed_in? %>
+        <%= link_to "Sign_Out", destroy_user_session_path, method: 'delete', data: {confirm: "로그아웃 하시겠습니까?"}, class:"btn btn-danger" %>
+      <% else%>
+        <%= link_to "Sign_In", new_user_session_path, class:"btn btn-danger" %>
+      <% end %>
+      <%= link_to "HOME", root_path, class:"btn btn-info"%>
+    </h1>
+    <%= yield %>
+  </div>
+</body>
+</html>

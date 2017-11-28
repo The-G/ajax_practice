@@ -1,0 +1,6 @@
+$('#like_count').text(<%=@post.likes.count%>);
+if(<%=@result%>){
+  $('#like_button').text("Like").addClass("btn-info").removeClass("btn-danger");
+}else{
+  $('#like_button').text("Dislike").addClass("btn-danger").removeCLass("btn-info");
+}

@@ -1,0 +1,75 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Contents:</strong>
+  <%= @post.contents %>
+</p>
+
+<%= form_tag create_comment_to_post_path, id: "create_comment" do %>
+  <%= text_field_tag :body%>
+  <%= submit_tag "댓글달기", id: "submit_btn"%>
+<% end %>
+
+<%= link_to 'Edit', edit_post_path(@post), class: "btn btn-warning" %>
+<%= link_to 'Back', posts_path, class: "btn btn-danger" %>
+<% if @like %>
+  <%= link_to "Like".html_safe, like_to_post_path, class: "btn btn-info", id: "like_button"%>
+<% else %>
+  <%= link_to "Dislike".html_safe, like_to_post_path, class: "btn btn-danger", id: "like_button"%>
+<% end %>
+<span id='like_count'><%=@post.likes.count%></span>
+
+<table class="table" id="comment_table">
+  <thead>
+    <tr>
+      <th>댓글</th>
+      <th>삭제</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%@post.comments.each do |p|%>
+      <!-- <tr>
+        <td><%= p.body%></td>
+        <td>
+        <%#= link_to "삭제", destroy_comment_to_posts_path(p),
+                      method: :delete,
+                      remote: true,
+                      data: {confirm: "정말로 삭제하시겠습니까?"} %>
+
+        </td>
+      </tr> -->
+      <%= render partial: 'posts/item', locals: {comment: p } %>
+    <%end%>
+  </tbody>
+</table>
+
+<script>
+  $(document).ready(function(){
+    // like
+    $('#like_button').on('click', function(e){
+      e.preventDefault();
+      alert("like button clicked")
+      $.ajax({
+        method: "POST",
+        url: "<%= like_to_post_path %>"
+      })
+    })
+    // comments
+    var form_var = $('#create_comment')
+    form_var.on('submit', function(event){
+      event.preventDefault(); // prevent default form action!!
+      var reply = $('#body').val();
+      console.log(reply);
+      $.ajax({
+        url:  "<%= create_comment_to_post_path %>",
+        method: "POST",
+        data: {body: reply}
+      })
+    });
+  });
+</script>

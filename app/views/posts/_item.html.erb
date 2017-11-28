@@ -1,0 +1,11 @@
+<tr id="comment-<%=comment.id%>">
+  <td>
+    <%=comment.body%>
+  </td>
+  <td>
+    <%= link_to "삭제", destroy_comment_to_posts_path(comment),
+                method: :delete,
+                remote: true,
+                data: {confirm: "정말로 삭제하시겠습니까?"} %>
+  </td>
+</tr>
