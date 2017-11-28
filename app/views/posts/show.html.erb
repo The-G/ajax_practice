@@ -11,7 +11,7 @@
 </p>
 
 <%= form_tag create_comment_to_post_path, id: "create_comment" do %>
-  <%= text_field_tag :body%>
+  <%= text_field_tag "comment[body]"%>
   <%= submit_tag "댓글달기", id: "submit_btn"%>
 <% end %>
 
@@ -63,12 +63,14 @@
     var form_var = $('#create_comment')
     form_var.on('submit', function(event){
       event.preventDefault(); // prevent default form action!!
-      var reply = $('#body').val();
+      // var reply = $('#body').val();
+      var reply = form_var.serialize(); // 모든 input 정보를 parameter로 바꿔주는 것!!
       console.log(reply);
       $.ajax({
         url:  "<%= create_comment_to_post_path %>",
         method: "POST",
-        data: {body: reply}
+        data: reply
+        // data: {body: reply}
       })
     });
   });

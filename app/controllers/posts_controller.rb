@@ -59,6 +59,7 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
+    (comment_params)
     @post.destroy
     respond_to do |format|
       format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
@@ -67,7 +68,7 @@ class PostsController < ApplicationController
   end
 
   def create_comment
-    @c = @post.comments.create(body: params[:body])
+    @c = @post.comments.create(comment_params)
   end
 
   def destroy_comment
@@ -109,5 +110,9 @@ class PostsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
       params.require(:post).permit(:title, :contents)
+    end
+
+    def comment_params # to prevent slq injection
+      params.require(:comment).permit(:body)
     end
 end
