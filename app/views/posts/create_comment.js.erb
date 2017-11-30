@@ -1,6 +1,6 @@
 alert("댓글 등록 완료!!");
 // ajax에서 했기 대문에 js 파일을 먼저 찾는다!! 그래서!! create_comment.js.erb를 먼저 찾은거지!!
 
-$('#body').val("");
+$('#comment_body').val("");
 var html = "<%= escape_javascript(render(partial: 'posts/item', locals: {comment: @c})) %>";
 $('#comment_table tbody').append(html);
